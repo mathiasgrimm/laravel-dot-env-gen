@@ -74,7 +74,7 @@ class EnvGen extends Command
             $envDefined[$matches[1]] = true;
         }
 
-        $this->info('checking if a found variable doest not exists on the .env file');
+        $this->info('checking if a found variable does not exist on the .env file');
 
         foreach (array_keys($envFound) as $var) {
             if (!isset($envDefined[$var])) {
