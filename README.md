@@ -44,5 +44,5 @@ The file .env.gen will be generated on your project root
 
 Output
 ------
-Along with the .env.gen file generation, the command will tell you if a .env variable is not used anywhere and/or if a
-enviroment variable is being used but not defined on the .env file
+Along with the .env.gen file generation, the command will tell you if a .env variable is not used anywhere and/or if an
+enviroment variable is being used but is not defined on the .env file
