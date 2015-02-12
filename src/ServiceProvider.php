@@ -5,8 +5,6 @@ use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
 {
-
-
 	public function boot()
 	{
 		//
@@ -16,5 +14,4 @@ class ServiceProvider extends LaravelServiceProvider
 	{
         $this->app->bind('dotenvgen','mathiasgrimm\\laraveldotenvgen\\EnvGen');
 	}
-
 }
