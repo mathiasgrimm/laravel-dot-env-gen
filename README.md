@@ -1,48 +1,41 @@
 # laravel-dot-env-gen
-php artisan command that generates a .env.gen file based on the existing project source code.<br>
+php artisan command that generates a .env.gen file based on the existing project source code.
+
 Analises for not used .env variables and variables that are used but not defined on the .env file
 
 # Composer
 
-<pre>
-"mathiasgrimm/laravel-dot-env-gen": "dev-master"
-</pre>
+`"mathiasgrimm/laravel-dot-env-gen": "dev-master"`
 
-# Adding to Laravel
+## Adding to Laravel
 
 You can use it with Laravel 4 and/or Laravel 5
 
+## Laravel 4
 
-Laravel 4
----------
 Add the following line to your app/start/artisan.php
 
-Artisan::add(new mathiasgrimm\laraveldotenv\EnvGen());
+`Artisan::add(new mathiasgrimm\laraveldotenv\EnvGen());`
 
-Laravel 5
----------
-First you need to add the service provider.<br>
-Open your app/config/app.php file and add the following serice provider:
+## Laravel 5
 
-<pre>
-	'mathiasgrimm\laraveldotenvgen\ServiceProvider' ,
-</pre>
+First you need to add the service provider.
 
-Then add the following to the app/Console/Kernel.php $commands array
+Open your `config/app.php` file and add the following serice provider:
 
-<pre>
-	'dotenvgen' ,
-</pre>
+`'mathiasgrimm\laraveldotenvgen\ServiceProvider',`
 
+Then add the following to the `app/Console/Kernel.php` `$commands` array
 
-# Executing the command
-<pre>
-php artisan env:gen
-</pre>
+`'dotenvgen',`
 
-The file .env.gen will be generated on your project root
+## Executing the command
 
-Output
-------
+`php artisan env:gen`
+
+The file `.env.gen` will be generated on your project root
+
+### Output
+
 Along with the .env.gen file generation, the command will tell you if a .env variable is not used anywhere and/or if an
 enviroment variable is being used but is not defined on the .env file
