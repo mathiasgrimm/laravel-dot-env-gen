@@ -23,6 +23,11 @@ class EnvGen extends Command
 	 */
 	protected $description = 'Searches for environment variables into the project and generates a .env.gen file';
 
+    /**
+     * @var \Symfony\Component\Console\Helper\ProgressHelper
+     */
+    protected $progressBar;
+
 	/**
 	 * Execute the console command.
 	 *
@@ -30,15 +35,26 @@ class EnvGen extends Command
 	 */
 	public function handle()
 	{
-        $this->info('searching files');
+
+        $this->info('preparing files');
 
         $directory = new \RecursiveDirectoryIterator(base_path());
         $iterator  = new \RecursiveIteratorIterator($directory);
         $regex     = new \RegexIterator($iterator, '/^.+\.php$/i', \RecursiveRegexIterator::ALL_MATCHES);
 
+        $total = 0;
+        foreach ($regex as $i=>$v) {
+            $total++;
+        }
+
+        $this->info('searching files');
+        $this->progressBar = $this->getHelperSet()->get('progress');
+        $this->progressBar->start($this->output, $total);
+
         $envFound = [];
 
         foreach ($regex as $i=>$v) {
+            $this->progressBar->advance();
             $fgc      = file_get_contents($i);
             $matches  = null;
             $matches2 = null;
@@ -51,6 +67,7 @@ class EnvGen extends Command
             }
         }
 
+        $this->progressBar->finish();
         ksort($envFound);
 
         $content = '';
