@@ -38,4 +38,6 @@ The file `.env.gen` will be generated on your project root
 ### Output
 
 Along with the .env.gen file generation, the command will tell you if a .env variable is not used anywhere and/or if an
-enviroment variable is being used but is not defined on the .env file
+environment variable is being used but is not defined on the .env file
+
+![alt tag](http://img.ctrlv.in/img/15/03/04/54f788064357f.png)

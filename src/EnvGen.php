@@ -5,6 +5,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Helper\Table;
 
 class EnvGen extends Command 
 {
@@ -51,6 +52,7 @@ class EnvGen extends Command
         $this->progressBar = $this->getHelperSet()->get('progress');
         $this->progressBar->start($this->output, $total);
 
+        $all      = [];
         $envFound = [];
 
         foreach ($regex as $i=>$v) {
@@ -63,6 +65,7 @@ class EnvGen extends Command
                 foreach ($matches[0] as $match) {
                     preg_match('/\(\s*(\'|")(?P<var>.*?)(\'|").*?\)/', $match, $matches2);
                     $envFound[$matches2['var']] = true;
+                    $all[$matches2['var']] = new \stdClass();
                 }
             }
         }
@@ -75,7 +78,7 @@ class EnvGen extends Command
             $content .= "{$var}=?????\n";
         }
 
-        $this->info('saving all variables found to the .env.gen file');
+        $this->info('saving all variables the we found to the .env.gen file');
 
         file_put_contents(base_path() . '/.env.gen', $content);
 
@@ -89,23 +92,49 @@ class EnvGen extends Command
             $matches = null;
             preg_match('/(.*?)=/', $line, $matches);
             $envDefined[$matches[1]] = true;
+
+            $all[$matches[1]] = new \StdClass;
         }
 
-        $this->info('checking if a found variable does not exist on the .env file');
+        ksort($all);
 
-        foreach (array_keys($envFound) as $var) {
-            if (!isset($envDefined[$var])) {
-                $this->comment("variable [{$var}] does not exist on the .env file");
+        foreach ($all as $name => $var) {
+            $all[$name]->onSource = isset($envFound[$name]);
+            $all[$name]->onDotEnv = isset($envDefined[$name]);
+        }
+
+        $table = new Table($this->output);
+
+        $table->setHeaders([
+            'Name',
+            'On .env',
+            'On source'
+        ]);
+
+        $rows = [];
+        foreach ($all as $var => $data) {
+            $tmp = [$var];
+
+            if ($data->onDotEnv) {
+                $tmp[] = 'Yes';
+            } else {
+                $tmp[0] = "<question>{$var}</question>";
+                $tmp[] = "<error>No</error>";
             }
-        }
 
-        $this->info('checking if an existent variable from the .env file is not being used anywhere');
-
-        foreach (array_keys($envDefined) as $var) {
-            if (!isset($envFound[$var])) {
-                $this->comment("variable [{$var}] from .env file is not being used anywhere");
+            if ($data->onSource) {
+                $tmp[] = 'Yes';
+            } else {
+                $tmp[0] = "<question>{$var}</question>";
+                $tmp[] = "<comment>No</comment>";
             }
+
+            $rows[] = $tmp;
         }
+
+        $table->setRows($rows);
+
+        $table->render();
 
         $this->info('done');
 	}
