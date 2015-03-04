@@ -78,7 +78,7 @@ class EnvGen extends Command
             $content .= "{$var}=?????\n";
         }
 
-        $this->info('saving all variables the we found to the .env.gen file');
+        $this->info('saving all variables that we found to the .env.gen file');
 
         file_put_contents(base_path() . '/.env.gen', $content);
 
