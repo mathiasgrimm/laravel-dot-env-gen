@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\Table;
 
-class EnvGen extends Command 
+class EnvGen extends Command
 {
 
 	/**
@@ -63,8 +63,9 @@ class EnvGen extends Command
 
             if (preg_match_all('/[^\w-_]env\s*\((\'|").*?(\'|")\)/sim', $fgc, $matches)) {
                 foreach ($matches[0] as $match) {
-                    preg_match('/\(\s*(\'|")(?P<var>.*?)(\'|").*?\)/', $match, $matches2);
+                    preg_match('/\(\s*(\'|")(?P<var>.*?)(\'|"),?\s*(?P<default>.*?)\)/', $match, $matches2);
                     $envFound[$matches2['var']] = true;
+                    $envDefault[$matches2['var']] = array_get($matches2, 'default');
                     $all[$matches2['var']] = new \stdClass();
                 }
             }
@@ -101,6 +102,7 @@ class EnvGen extends Command
         foreach ($all as $name => $var) {
             $all[$name]->onSource = isset($envFound[$name]);
             $all[$name]->onDotEnv = isset($envDefined[$name]);
+			$all[$name]->default = array_get($envDefault, $name);
         }
 
         $table = new Table($this->output);
@@ -108,7 +110,8 @@ class EnvGen extends Command
         $table->setHeaders([
             'Name',
             'On .env',
-            'On source'
+            'On source',
+            'Default',
         ]);
 
         $rows = [];
@@ -128,6 +131,8 @@ class EnvGen extends Command
                 $tmp[0] = "<question>{$var}</question>";
                 $tmp[] = "<comment>No</comment>";
             }
+
+			$tmp[] = $data->default;
 
             $rows[] = $tmp;
         }
