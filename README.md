@@ -15,7 +15,7 @@ You can use it with Laravel 4 and/or Laravel 5
 
 Add the following line to your app/start/artisan.php
 
-`Artisan::add(new mathiasgrimm\laraveldotenv\EnvGen());`
+`Artisan::add(new mathiasgrimm\laraveldotenvgen\EnvGen());`
 
 ## Laravel 5
 

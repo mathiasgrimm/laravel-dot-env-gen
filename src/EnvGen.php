@@ -34,7 +34,7 @@ class EnvGen extends Command
 	 *
 	 * @return mixed
 	 */
-	public function handle()
+	public function fire()
 	{
 
         $this->info('preparing files');
