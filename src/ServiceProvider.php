@@ -12,6 +12,6 @@ class ServiceProvider extends LaravelServiceProvider
 
 	public function register()
 	{
-        $this->app->bind('dotenvgen','mathiasgrimm\\laraveldotenvgen\\EnvGen');
+		$this->app->bind('dotenvgen','mathiasgrimm\\laraveldotenvgen\\EnvGen');
 	}
 }
