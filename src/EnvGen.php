@@ -2,9 +2,6 @@
 namespace mathiasgrimm\laraveldotenvgen;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Inspiring;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\Table;
 
 class EnvGen extends Command 
