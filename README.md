@@ -1,43 +1,39 @@
 # laravel-dot-env-gen
-php artisan command that generates a .env.gen file based on the existing project source code.
+A Laravel 5 command that generates a `.env.gen` file containing all environment
+variables defined in `.env` as well as any undefined variables that are being
+used throughout the project.
 
-Analises for not used .env variables and variables that are used but not defined on the .env file
+# Installation
 
-# Composer
+Install the package using composer:
 
-`"mathiasgrimm/laravel-dot-env-gen": "dev-master"`
+```bash
+composer require mathiasgrimm/laravel-dot-env-gen:dev-master
+```
 
-## Adding to Laravel
+Add the service provider:
 
-You can use it with Laravel 4 and/or Laravel 5
+```php
+// config/app.php
 
-## Laravel 4
+'providers' => [
+	...
+	'MathiasGrimm\LaravelDotEnvGen\DotEnvGenServiceProvider',
+	...
+],
+```
 
-Add the following line to your app/start/artisan.php
+# Usage
 
-`Artisan::add(new mathiasgrimm\laraveldotenv\EnvGen());`
+From the command line, run `php artisan env:gen`.
 
-## Laravel 5
+A `.env.gen` file will be generated in your project's root folder. Make any
+changes you may need, then rename the file to `.env`.
 
-First you need to add the service provider.
+Along with generating the `.env.gen` file, the command will notify you if a
+defined environment variable is unused as well as alert you if an undefined
+environment variable is being used.
 
-Open your `config/app.php` file and add the following serice provider:
+## Screenshot
 
-`'mathiasgrimm\laraveldotenvgen\ServiceProvider',`
-
-Then add the following to the `app/Console/Kernel.php` `$commands` array
-
-`'dotenvgen',`
-
-## Executing the command
-
-`php artisan env:gen`
-
-The file `.env.gen` will be generated on your project root
-
-### Output
-
-Along with the .env.gen file generation, the command will tell you if a .env variable is not used anywhere and/or if an
-environment variable is being used but is not defined on the .env file
-
-![alt tag](http://img.ctrlv.in/img/15/03/04/54f78bb973fa9.png)
+![Screenshot](screenshot.png)
