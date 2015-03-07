@@ -23,6 +23,8 @@ Add the service provider:
 ],
 ```
 
+Add `.env.gen` to your `.gitignore`
+
 # Usage
 
 From the command line, run `php artisan env:gen`.

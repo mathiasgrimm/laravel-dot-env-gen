@@ -69,7 +69,7 @@ class DotEnvGenCommand extends Command
         $this->info('Gathering PHP files...');
 
         $directory = new \RecursiveDirectoryIterator(base_path());
-        $iterator = new \RecursiveIteratorIterator($directory);
+        $iterator  = new \RecursiveIteratorIterator($directory);
 
         $this->iterator = new \RegexIterator($iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
     }
@@ -91,7 +91,7 @@ class DotEnvGenCommand extends Command
                 foreach ($matches[0] as $match) {
                     preg_match('/\(\s*(\'|")(?P<name>.*?)(\'|"),?\s*(?P<default>.*?)\)/', $match, $matches2);
 
-                    $this->found[$matches2['name']] = '';
+                    $this->found[$matches2['name']]    = '';
                     $this->defaults[$matches2['name']] = $matches2['default'];
                 }
             }
@@ -156,17 +156,17 @@ class DotEnvGenCommand extends Command
                 $row[] = 'Yes';
             } else {
                 $row[0] = "<question>$key</question>";
-                $row[] = '<error>No</error>';
+                $row[]  = '<error>No</error>';
             }
 
             if (array_key_exists($key, $this->found)) {
                 $row[] = 'Yes';
             } else {
                 $row[0] = "<question>$key</question>";
-                $row[] = '<comment>No</comment>';
+                $row[]  = '<comment>No</comment>';
             }
 
-            $row[] = array_get($this->defaults, $key);
+            $row[]  = array_get($this->defaults, $key);
             $rows[] = $row;
         }
 
