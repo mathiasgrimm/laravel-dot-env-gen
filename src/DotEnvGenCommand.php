@@ -85,14 +85,19 @@ class DotEnvGenCommand extends Command
 
         foreach ($this->iterator as $i => $v) {
             $this->progressBar->advance();
-            $contents = file_get_contents($i);
 
-            if (preg_match_all('/[^\w-]env\s*\((\'|").*?(\'|")\)/sim', $contents, $matches)) {
+            $contents = file_get_contents($i);
+            $matches  = null;
+
+            if (preg_match_all('/[^\w_]env\s*\((\'|").*?(\'|")\s*.*?\)/sim', $contents, $matches)) {
+
                 foreach ($matches[0] as $match) {
-                    preg_match('/\(\s*(\'|")(?P<name>.*?)(\'|"),?\s*(?P<default>.*?)\)/', $match, $matches2);
+                    $matches2 = null;
+
+                    preg_match('/\(\s*(\'|")(?P<name>.*?)(\'|")(,(?P<default>.*))?\)/', $match, $matches2);
 
                     $this->found[$matches2['name']]    = '';
-                    $this->defaults[$matches2['name']] = $matches2['default'];
+                    $this->defaults[$matches2['name']] = isset($matches2['default']) ? trim($matches2['default']) : null;
                 }
             }
         }
