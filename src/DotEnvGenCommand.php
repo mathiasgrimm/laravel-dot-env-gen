@@ -114,13 +114,13 @@ class DotEnvGenCommand extends Command
         }
 
         foreach (file(base_path('.env')) as $line) {
-            if (strpos($line, '=') === false) {
+            if (strpos(trim($line), '#') === 0 || strpos($line, '=') === false) {
                 continue;
             }
 
-            preg_match('/(.+)=(.*)/', $line, $matches);
+            list($name, $value) = array_map('trim', explode('=', $line, 2));
 
-            $this->defined[$matches[1]] = $matches[2];
+            $this->defined[$name] = $value;
         }
     }
 
