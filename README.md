@@ -1,4 +1,4 @@
-# laravel-dot-env-gen
+# Laravel Dot Env Generator
 A Laravel 5 command that generates a `.env.gen` file containing all environment
 variables defined in `.env` as well as any undefined variables that are being
 used throughout the project.

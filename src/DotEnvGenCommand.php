@@ -62,6 +62,8 @@ class DotEnvGenCommand extends Command
         $this->generateFile();
         $this->info('Done. Results:');
         $this->showResults();
+
+        $this->info("by Laravel Dot Env Generator - https://github.com/mathiasgrimm/laravel-dot-env-gen");
     }
 
     protected function gatherFiles()
