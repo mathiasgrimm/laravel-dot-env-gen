@@ -25,6 +25,33 @@ Add the service provider:
 
 Add `.env.gen` to your `.gitignore`
 
+## Configuration
+
+You can control which directories are scanned by providing exclusion rules in
+the `dotenvgen.php` config file. By default, all subdirectories inside `vendor`
+are ignored except `vendor/laravel`.
+
+Publish the config file:
+
+```bash
+php artisan vendor:publish --provider="Vendor\Providers\DotEnvGenServiceProvider" --tag="config"
+```
+
+Example config:
+
+```php
+// config/dotenvgen.php
+
+'rules' => [
+	// Ignores all files inside `vendor` except for those in `vendor/laravel`
+	// This is the default behavior
+	'vendor' => ['laravel'],
+
+	// Ignores the `database/seeds` directory
+	'database/seeds' => [],
+],
+```
+
 # Usage
 
 From the command line, run `php artisan env:gen`.

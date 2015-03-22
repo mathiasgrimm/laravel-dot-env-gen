@@ -73,7 +73,30 @@ class DotEnvGenCommand extends Command
         $directory = new \RecursiveDirectoryIterator(base_path());
         $iterator  = new \RecursiveIteratorIterator($directory);
 
-        $this->iterator = new \RegexIterator($iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
+        $rules  = \Config::get('dotenvgen.rules');
+        $ignore = implode('|', array_map(function ($path) use ($rules) {
+            if (!empty($rules[$path])) {
+                $excludes = $rules[$path];
+
+                if (is_array($excludes)) {
+                    $excluded = implode('|', array_map(function ($sub) {
+                        return preg_quote(DIRECTORY_SEPARATOR . $sub, '/');
+                    }, $excludes));
+                } else {
+                    $excluded = preg_quote(DIRECTORY_SEPARATOR . $excludes, '/');
+                }
+            }
+
+            return preg_quote($path, '/') . (!empty($excluded) ? '(?!' . $excluded . ')' : '');
+        }, array_keys($rules)));
+
+        if (!empty($ignore)) {
+            $regex = '/^(?!' . preg_quote(base_path() . DIRECTORY_SEPARATOR, '/') . '(' . $ignore . ')' . ').+\.php$/i';
+        } else {
+            $regex = '/^.+\.php$/i';
+        }
+
+        $this->iterator = new \RegexIterator($iterator, $regex, \RecursiveRegexIterator::GET_MATCH);
     }
 
     protected function scanFiles()
