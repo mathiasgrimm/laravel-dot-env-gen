@@ -115,7 +115,6 @@ class DotEnvGenCommand extends Command
             $matches  = null;
 
             if (preg_match_all('/[^\w_]env\s*\((\'|").*?(\'|")\s*.*?\)/sim', $contents, $matches)) {
-
                 foreach ($matches[0] as $match) {
                     $matches2 = null;
 
