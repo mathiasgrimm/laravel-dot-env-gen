@@ -81,7 +81,7 @@ class DotEnvGenCommand extends Command
                 if (is_array($excludes)) {
                     $excluded = implode('|', array_map(function ($sub) {
                         return preg_quote(DIRECTORY_SEPARATOR . $sub, '/');
-                    }, $excludes));
+                    }, array_filter($excludes)));
                 } else {
                     $excluded = preg_quote(DIRECTORY_SEPARATOR . $excludes, '/');
                 }
