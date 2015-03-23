@@ -88,7 +88,7 @@ class DotEnvGenCommand extends Command
             }
 
             return preg_quote($path, '/') . (!empty($excluded) ? '(?!' . $excluded . ')' : '');
-        }, array_keys($rules)));
+        }, array_filter(array_keys($rules))));
 
         if (!empty($ignore)) {
             $regex = '/^(?!' . preg_quote(base_path() . DIRECTORY_SEPARATOR, '/') . '(' . $ignore . ')' . ').+\.php$/i';
