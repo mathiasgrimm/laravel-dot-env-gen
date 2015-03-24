@@ -63,22 +63,18 @@ class DotEnvGenCommand extends Command
         $this->info('Done. Results:');
         $this->showResults();
 
-        $this->info("by Laravel Dot Env Generator - https://github.com/mathiasgrimm/laravel-dot-env-gen");
+        $this->info('By Laravel Dot Env Generator - https://github.com/mathiasgrimm/laravel-dot-env-gen');
     }
 
     protected function gatherFiles()
     {
         $this->info('Gathering PHP files...');
+        $this->info('You can speed up this process by excluding folders. Check the README for more info.');
 
         $directory = new \RecursiveDirectoryIterator(base_path());
         $iterator  = new \RecursiveIteratorIterator($directory);
         $rules     = \Config::get('dotenvgen.rules');
-
-        if (empty($rules)) {
-            $this->info("You can speed up this process by excluding folders. Check the README for more info.");
-        }
-
-        $ignore = implode('|', array_map(function ($path) use ($rules) {
+        $ignore    = implode('|', array_map(function ($path) use ($rules) {
             if (!empty($rules[$path])) {
                 $excludes = $rules[$path];
 
