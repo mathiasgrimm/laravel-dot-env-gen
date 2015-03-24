@@ -16,8 +16,15 @@ return [
     | By default, we are ignoring all files & folders in the `vendor`
     | directory except those in the `vendor/laravel` subdirectory.
     |
-    | To ignore only `vendor/mathiasgrimm`, for example, you may use the
-    | following:
+    | To ignore all files in the `vendor` directory except those in the
+    | `vendor/laravel` subdirectory, you may use the following:
+    |
+    |     'rules' => [
+    |         'vendor' => ['laravel'],
+    |     ],
+    |
+    | Or if you want to ignore a specific vendor package like `mathiasgrimm/*`,
+    | you may use the path to the vendor's root or package folder like so:
     |
     |     'rules' => [
     |         'vendor/mathiasgrimm' => [],
@@ -27,7 +34,20 @@ return [
 
     'rules' => [
 
-        'vendor' => ['laravel'],
+        /**
+         * We recommend uncommenting this line to improve performance in a
+         * fresh Laravel install. If you are using any packages that use
+         * environment variables, you may simply add the vendor/package folder
+         * name before, after, or in place of `'laravel'`:
+         *
+         *     'vendor' => ['laravel', 'foodeveloper/barpackage'],
+         *
+         * Or if you want to scan all of foodeveloper's packages:
+         *
+         *     'vendor' => ['laravel', 'foodeveloper'],
+         *
+         */
+        // 'vendor' => ['laravel'],
 
     ],
 

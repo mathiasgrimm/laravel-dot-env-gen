@@ -28,8 +28,8 @@ Add `.env.gen` to your `.gitignore`
 ## Configuration
 
 You can control which directories are scanned by providing exclusion rules in
-the `dotenvgen.php` config file. By default, all subdirectories inside `vendor`
-are ignored except `vendor/laravel`.
+the `dotenvgen.php` config file. For a fresh Laravel install, we suggest that
+all subdirectories inside `vendor` are ignored except for `vendor/laravel`.
 
 Publish the config file:
 
@@ -44,7 +44,6 @@ Example config:
 
 'rules' => [
 	// Ignores all files inside `vendor` except for those in `vendor/laravel`
-	// This is the default behavior
 	'vendor' => ['laravel'],
 
 	// Ignores the `database/seeds` directory

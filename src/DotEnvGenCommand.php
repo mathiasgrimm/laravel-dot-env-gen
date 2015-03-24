@@ -72,8 +72,12 @@ class DotEnvGenCommand extends Command
 
         $directory = new \RecursiveDirectoryIterator(base_path());
         $iterator  = new \RecursiveIteratorIterator($directory);
+        $rules     = \Config::get('dotenvgen.rules');
 
-        $rules  = \Config::get('dotenvgen.rules');
+        if (empty($rules)) {
+            $this->info("You can speed up this process by excluding folders. Check the README for more info.");
+        }
+
         $ignore = implode('|', array_map(function ($path) use ($rules) {
             if (!empty($rules[$path])) {
                 $excludes = $rules[$path];
