@@ -1,6 +1,7 @@
 <?php namespace MathiasGrimm\LaravelDotEnvGen;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 
 class DotEnvGenCommand extends Command
@@ -20,7 +21,7 @@ class DotEnvGenCommand extends Command
     protected $description = 'Generates a `.env.gen` file based on environment variables used throughout the project.';
 
     /**
-     * @var \Symfony\Component\Console\Helper\ProgressHelper
+     * @var \Symfony\Component\Console\Helper\ProgressBar
      */
     protected $progressBar;
 
@@ -105,8 +106,8 @@ class DotEnvGenCommand extends Command
 
         $this->info("Scanning $count files...");
 
-        $this->progressBar = $this->getHelperSet()->get('progress');
-        $this->progressBar->start($this->output, $count);
+        $this->progressBar = new ProgressBar($this->output, $count);
+        $this->progressBar->start();
 
         foreach ($this->iterator as $i => $v) {
             $this->progressBar->advance();
@@ -127,6 +128,8 @@ class DotEnvGenCommand extends Command
         }
 
         $this->progressBar->finish();
+        
+        $this->info('');
     }
 
     protected function scanEnv()
