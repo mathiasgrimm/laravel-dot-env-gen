@@ -1,29 +1,37 @@
 # Laravel Dot Env Generator
+
 A Laravel 5 command that generates a `.env.gen` file containing all environment
 variables defined in `.env` as well as any undefined variables that are being
 used throughout the project.
 
 # Installation
 
-Install the package using composer:
+1. Install the package using composer:
 
-```bash
-composer require mathiasgrimm/laravel-dot-env-gen:dev-master
-```
+    ```bash
+    composer require mathiasgrimm/laravel-dot-env-gen:dev-master
+    ```
 
-Add the service provider:
+2. Add the service provider in `config/app.php`:
 
-```php
-// config/app.php
+    ```php
+    'providers' => [
+        MathiasGrimm\LaravelDotEnvGen\DotEnvGenServiceProvider::class,
+    ],
+    ```
 
-'providers' => [
-	...
-	'MathiasGrimm\LaravelDotEnvGen\DotEnvGenServiceProvider',
-	...
-],
-```
+3. Add `.env.gen` to your `.gitignore`
 
-Add `.env.gen` to your `.gitignore`
+4. *(Suggested)* Add `php artisan env:gen` to composer's `post-update-cmd` scripts in `composer.json`:
+
+    ```json
+    "scripts": {
+        "post-update-cmd": [
+            "php artisan optimize",
+            "php artisan env:gen"
+        ],
+    },
+    ```
 
 ## Configuration
 
@@ -55,7 +63,7 @@ Example config:
 
 From the command line, run `php artisan env:gen`.
 
-A `.env.gen` file will be generated in your project's root folder. Make any
+A file named `.env.gen` will be generated in your project's root folder. Make any
 changes you may need, then rename the file to `.env`.
 
 Along with generating the `.env.gen` file, the command will notify you if a
