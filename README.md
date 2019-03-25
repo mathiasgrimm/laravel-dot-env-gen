@@ -34,7 +34,7 @@ all subdirectories inside `vendor` are ignored except for `vendor/laravel`.
 Publish the config file:
 
 ```bash
-php artisan vendor:publish --provider="Vendor\Providers\DotEnvGenServiceProvider" --tag="config"
+php artisan vendor:publish --provider="MathiasGrimm\LaravelDotEnvGen\DotEnvGenServiceProvider" --tag="config"
 ```
 
 Example config:
