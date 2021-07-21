@@ -1,14 +1,13 @@
 {
     "name": "mathiasgrimm/laravel-dot-env-gen",
-    "description": "A Laravel 5 artisan command to generate a .env.gen file based on the existing project.",
+    "description": "A Laravel artisan command to generate a .env.gen file based on the existing project.",
     "keywords": ["artisan", "command", "dotenv", "env", "environment"],
     "homepage": "https://github.com/mathiasgrimm/laravel-dot-env-gen/",
     "type": "library",
     "authors": [
         {
             "name": "Mathias Grimm",
-            "email": "mathiasgrimm@gmail.com",
-            "homepage": "http://phpEmpregos.com"
+            "email": "mathiasgrimm@gmail.com"
         }
     ],
     "require": {
@@ -17,6 +16,13 @@
     "autoload": {
         "psr-4": {
             "MathiasGrimm\\LaravelDotEnvGen\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MathiasGrimm\\LaravelDotEnvGen\\DotEnvGenServiceProvider"
+            ]
         }
     }
 }
