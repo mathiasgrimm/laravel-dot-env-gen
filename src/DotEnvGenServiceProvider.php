@@ -16,7 +16,7 @@ class DotEnvGenServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/config/dotenvgen.php', 'dotenvgen');
 
         $this->app->singleton('command.env.gen', function ($app) {
-            return $app['MathiasGrimm\LaravelDotEnvGen\DotEnvGenCommand'];
+            return $app[\MathiasGrimm\LaravelDotEnvGen\DotEnvGenCommand::class];
         });
 
         $this->commands('command.env.gen');
